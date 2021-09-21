@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import { auth, provider } from "../firebase"
-import userSlice from '../features/user/userSlice'
+// import userSlice from '../features/user/userSlice'
 import { selectUserName, selectUserPhoto, setUserLogin, setSignOut } from '../features/user/userSlice';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
@@ -13,7 +13,9 @@ function Header() {
  const history = useHistory();
 
  useEffect(() => {
-     auth.onAuthStateChanged(async (user) => {  //firebase remembers the user 
+     auth.onAuthStateChanged(async(user) => { 
+        //firebase remembers the user 
+        console.log("here is the user..", user)
        if(user){
          dispatch(setUserLogin({
            name:user.displayName,
@@ -30,6 +32,7 @@ function Header() {
         .then((result) => {
           console.log(result)
            let user = result.user;
+           console.log("here is the user..", userName);
          dispatch(setUserLogin({
            name: user.displayName,
            email: user.email,
@@ -49,6 +52,7 @@ function Header() {
     history.push("/login")
   })
 } 
+
     return (
       <Nav>
           <Logo src="/images/logo.svg"/>
